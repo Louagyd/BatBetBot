@@ -19,7 +19,8 @@ def help(bot, update):
 
 
 def echo(bot, update):
-    update.message.reply_text(update.message.text)
+    new_text = "FUCK_YOU" + update.message.text
+    update.message.reply_text(new_text)
 
 
 def error(bot, update, error):
