@@ -10,8 +10,8 @@ import re
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-# TOKEN = '571127123:AAERBzje-WicNr_cAA1RFbZ0SarRm7Rj008'
-TOKEN = '207552079:AAGGdHSjwGioKX1Cl4qbXTdwo84x5tvNa50'
+TOKEN = '571127123:AAERBzje-WicNr_cAA1RFbZ0SarRm7Rj008'
+# TOKEN = '207552079:AAGGdHSjwGioKX1Cl4qbXTdwo84x5tvNa50'
 
 bet_creation = {}
 y_or_n = {}
