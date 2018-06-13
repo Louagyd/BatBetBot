@@ -390,7 +390,7 @@ def show_predictions(bot, update, args):
     update.message.reply_text(str(betno+1) + '. ' + all_data[current_room[user_code]]['bets'][betno].name)
     res_str = ''
     for user in all_data[current_room[user_code]]['bets'][betno].predicts:
-        res_str = res_str + user + " : " + all_data[current_room[user_code]]['bets'][betno].predicts[user] + '\n'
+        res_str = res_str + user + " : " + str(all_data[current_room[user_code]]['bets'][betno].predicts[user]) + '\n'
     update.message.reply_text(res_str)
 
 def score_board(bot, update):
@@ -437,14 +437,14 @@ def echo(bot, update):
             del all_data[current_room[user_code]]
             rusure[user_code] = False
             update.message.reply_text("Room Deleted Successfully.")
-            str = 'Use following commands:\n /join [RoomName] [ID] for joining to a room\n /new_room [RoomName] [ID] for creating a room'
-            update.message.reply_text(str)
+            str_help = 'Use following commands:\n /join [RoomName] [ID] for joining to a room\n /new_room [RoomName] [ID] for creating a room'
+            update.message.reply_text(str_help)
             current_room[user_code] = None
             with open('all_data.pkl', 'wb') as f:
                 pkl.dump([all_data], f)
         elif response.lower() == "no":
-            str = 'Use following commands:\n /join [RoomName] [ID] for joining to a room\n /new_room [RoomName] [ID] for creating a room'
-            update.message.reply_text(str)
+            str_help = 'Use following commands:\n /join [RoomName] [ID] for joining to a room\n /new_room [RoomName] [ID] for creating a room'
+            update.message.reply_text(str_help)
             rusure[user_code] = False
         else:
             update.message.reply_text("please say yes or no :|")
