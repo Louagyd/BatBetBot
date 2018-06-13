@@ -464,6 +464,7 @@ def echo(bot, update):
         with open('all_data.pkl', 'rb') as f:
             [all_data] = pkl.load(f)
         this_bet_pred = update.message.text
+        this_bet_pred2 = this_bet_pred
         if all_data[current_room[user_code]]['bets'][bet_counter[user_code]].info == "match":
             this_bet_pred = re.sub("[^0-9]", "", this_bet_pred)
             if this_bet_pred == '':
@@ -475,7 +476,7 @@ def echo(bot, update):
                 update.message.reply_text("please insert " + str(all_data[current_room[user_code]]['bets'][bet_counter[user_code]].num) + " choices")
                 return
 
-        if this_bet_pred.lower() == 'x':
+        if this_bet_pred2.lower() == 'x':
             bet_counter[user_code] = -1
             update.message.reply_text("You canceled predicting next bets")
             update.message.reply_text(message_afterjoin)
