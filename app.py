@@ -208,7 +208,7 @@ def join_room(bot, update, args):
                     update.message.reply_text(message_afterjoin)
                     current_room[user_code] = room_name
                 else:
-                    update.message.reply_text("You have joined this room. now you should predict all the bets.\n for match bets you should send 2 numbers and for choices you should write your chioces with spaces between. \n Lets START...")
+                    update.message.reply_text("You have joined this room. now you should predict all the bets.\n for match bets you should send 2 numbers and for choices you should write your chioces with spaces between. \n type X to cancle the operation \n Lets START...")
                     current_room[user_code] = room_name
                     bet_counter[user_code] = 0
                     this_title = all_data[room_name]['bets'][0].name
@@ -350,7 +350,7 @@ def refill_bets(bot, update):
     if current_room[user_code] is None:
         update.message.reply_text("You are not in any rooms. please join to a room first")
         return
-    update.message.reply_text("you should predict all the bets. Lets START...")
+    update.message.reply_text("you should predict all the bets. \n for match bets you should send 2 numbers and for choices you should write your chioces with spaces between. \n type X to cancle the operation \n Lets START...")
     with open('all_data.pkl', 'rb') as f:
         [all_data] = pkl.load(f)
     bet_counter[user_code] = 0
