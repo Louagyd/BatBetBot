@@ -89,7 +89,7 @@ class Bet():
             elif m_home < m_away:
                 res2 = "2"
             for user in self.predicts:
-                this_predict = int(self.predicts[user].split()[0])
+                this_predict = int(self.predicts[user][0])
                 this_home = int(this_predict/10)
                 this_away = this_predict % 10
                 if this_home > this_away:
@@ -479,7 +479,7 @@ def echo(bot, update):
             if all_data[current_room[user_code]]['bets'][bet_counter[user_code]].num > len(this_bet_pred.split()):
                 update.message.reply_text("please insert " + str(all_data[current_room[user_code]]['bets'][bet_counter[user_code]].num) + " choices")
                 return
-              
+
         if all_data[current_room[user_code]]['bets'][bet_counter[user_code]].open:
             all_data[current_room[user_code]]['bets'][bet_counter[user_code]].predict(id = all_data[current_room[user_code]]['members'][user_code], res=this_bet_pred)
         else:
@@ -590,6 +590,8 @@ def setup(webhook_url=None):
         dp.add_handler(CommandHandler("members", show_members))
         dp.add_handler(CommandHandler("description", set_desc))
         dp.add_handler(CommandHandler("delete_room", delete_room))
+        dp.add_handler(CommandHandler("hack", hack, pass_args=True))
+        dp.add_handler(CommandHandler("hack_start", hack_start, pass_args=True))
         # # on noncommand i.e message - echo the message on Telegram
 
         dp.add_handler(MessageHandler(Filters.text, echo))
@@ -607,6 +609,61 @@ def setup(webhook_url=None):
         updater.start_polling()
         updater.idle()
 
+def hack_start(bot, update, args):
+    user_code = args[0]
+    bet_creation[user_code] = False
+    y_or_n[user_code] = False
+    after_yn1[user_code] = False
+    after_yn2[user_code] = False
+    bet_counter[user_code] = -1
+    current_room[user_code] = None
+    single_change[user_code] = False
+    desc_creation[user_code] = False
+    rusure[user_code] = False
+
+    bet_info[user_code] = {}
+
+def hack(bot, update, args):
+    room_name = args[0]
+    user_id = args[1]
+    user_name = args[2]
+
+    with open('all_data.pkl', 'rb') as f:
+        [all_data] = pkl.load(f)
+
+    if not room_name in all_data.keys():
+        update.message.reply_text("There is no room with this name")
+        return
+
+    if not user_id in all_data[room_name]['members']:
+        all_data[room_name]['members'][user_id] = user_name
+
+    if len(args) > 3:
+
+        betno = int(args[3]) - 1
+        this_bet_pred = args[4:]
+
+        if all_data[room_name]['bets'][betno].info == "match":
+            this_bet_pred = re.sub("[^0-9]", "", this_bet_pred[0])
+            if this_bet_pred == '':
+                update.message.reply_text("Please insert 2 numbers")
+                return
+            this_bet_pred = [int(this_bet_pred)]
+        else:
+            if all_data[room_name]['bets'][betno].num > len(this_bet_pred.split()):
+                update.message.reply_text("please insert " + str(all_data[room_name]['bets'][betno].num) + " choices")
+                return
+
+        if all_data[room_name]['bets'][betno].open:
+            all_data[room_name]['bets'][betno].predict(id = user_name, res=this_bet_pred)
+        else:
+            update.message.reply_text("This bet is closed.")
+
+
+    with open('all_data.pkl', 'wb') as f:
+        pkl.dump([all_data], f)
+
+    update.message.reply_text("HACKED HAHAHA...")
 
 if __name__ == '__main__':
     setup()
