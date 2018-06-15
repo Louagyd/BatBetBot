@@ -31,7 +31,7 @@ message_afterjoin = 'Use following commands:\n'
 message_afterjoin += '/members - show members of your current room.\n'
 message_afterjoin += '/bets - show all bets of current room.\n'
 message_afterjoin += '/show [BetNumber] - show other predictions of bet[BetNumber].\n'
-message_afterjoin += '/submit_bet [BetNumber] - submit your predictions for bet[BetNumber].\n'
+message_afterjoin += '/pred [BetNumber] - submit your predictions for bet[BetNumber].\n'
 message_afterjoin += '/refill - start predicting all the bets.\n'
 message_afterjoin += '/score_board - show current score board of the room.\n\n\n'
 
@@ -585,7 +585,7 @@ def setup(webhook_url=None):
         dp.add_handler(CommandHandler("close_bet", close_bet, pass_args=True))
         dp.add_handler(CommandHandler("open_bet", open_bet, pass_args=True))
         dp.add_handler(CommandHandler("submit_result", submit_result, pass_args=True))
-        dp.add_handler(CommandHandler("submit_bet", modify_bet, pass_args=True))
+        dp.add_handler(CommandHandler("pred", modify_bet, pass_args=True))
         dp.add_handler(CommandHandler("refill", refill_bets))
         dp.add_handler(CommandHandler("show", show_predictions, pass_args=True))
         dp.add_handler(CommandHandler("score_board", score_board))
