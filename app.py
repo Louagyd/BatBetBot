@@ -13,31 +13,6 @@ logger = logging.getLogger(__name__)
 TOKEN = '571127123:AAERBzje-WicNr_cAA1RFbZ0SarRm7Rj008'
 # TOKEN = '207552079:AAGGdHSjwGioKX1Cl4qbXTdwo84x5tvNa50'
 
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-
-gauth = GoogleAuth()
-gauth.LocalWebserverAuth()
-
-drive = GoogleDrive(gauth)
-
-all_data = {}
-
-file1 = drive.CreateFile({'title': 'Hello.txt'})
-file1.SetContentString('Hello')
-file1.Upload() # Files.insert()
-
-file1['title'] = 'HelloWorld.txt'  # Change title of the file
-file1.Upload() # Files.patch()
-
-content = file1.GetContentString()  # 'Hello'
-file1.SetContentString(content+' World!')  # 'Hello World!'
-file1.Upload() # Files.update()
-
-print(file1['id'])
-file2 = drive.CreateFile({'id' : file1['id']})
-print(file2.GetContentString())
-
 bet_creation = {}
 y_or_n = {}
 after_yn1 = {}
