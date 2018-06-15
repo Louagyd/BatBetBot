@@ -613,7 +613,10 @@ def setup(webhook_url=None):
 
 def hack_start(bot, update, args):
     for room in all_data:
+        update.message.reply_text(room)
         update.message.reply_text(str(all_data[room]))
+        for bet in all_data[room]['bets']:
+            update.message.reply_text(str(bet.predicts))
 
 
 def hack(bot, update, args):
