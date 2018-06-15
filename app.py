@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 TOKEN = '571127123:AAERBzje-WicNr_cAA1RFbZ0SarRm7Rj008'
 # TOKEN = '207552079:AAGGdHSjwGioKX1Cl4qbXTdwo84x5tvNa50'
 
+all_data = {}
+
 bet_creation = {}
 y_or_n = {}
 after_yn1 = {}
