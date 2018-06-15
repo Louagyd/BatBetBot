@@ -624,17 +624,17 @@ def hack(bot, update, args):
     user_id = args[1]
     user_name = args[2]
     
-    bet_creation[user_code] = False
-    y_or_n[user_code] = False
-    after_yn1[user_code] = False
-    after_yn2[user_code] = False
-    bet_counter[user_code] = -1
-    current_room[user_code] = room_name
-    single_change[user_code] = False
-    desc_creation[user_code] = False
-    rusure[user_code] = False
+    bet_creation[user_id] = False
+    y_or_n[user_id] = False
+    after_yn1[user_id] = False
+    after_yn2[user_id] = False
+    bet_counter[user_id] = -1
+    current_room[user_id] = room_name
+    single_change[user_id] = False
+    desc_creation[user_id] = False
+    rusure[user_id] = False
 
-    bet_info[user_code] = {}
+    bet_info[user_id] = {}
     
     # with open('all_data.pkl', 'rb') as f:
     #    [all_data] = pkl.load(f)
