@@ -21,6 +21,7 @@ gauth.LocalWebserverAuth()
 
 drive = GoogleDrive(gauth)
 
+all_data = {}
 
 file1 = drive.CreateFile({'title': 'Hello.txt'})
 file1.SetContentString('Hello')
@@ -146,11 +147,11 @@ def new_room(bot, update, args):
     room_name = args[0]
     admin_id = args[1]
     admin_code = update.message.chat_id
-    if os.path.isfile('all_data.pkl'):
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
-    else:
-        all_data = {}
+    # if os.path.isfile('all_data.pkl'):
+    #     with open('all_data.pkl', 'rb') as f:
+    #         [all_data] = pkl.load(f)
+    # else:
+    #     all_data = {}
     if room_name in all_data.keys():
         update.message.reply_text("name of room already exists!")
         return
@@ -169,11 +170,11 @@ def delete_room(bot, update):
         return
     room_name = current_room[user_code]
 
-    if os.path.isfile('all_data.pkl'):
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
-    else:
-        all_data = {}
+    # if os.path.isfile('all_data.pkl'):
+    #    with open('all_data.pkl', 'rb') as f:
+    #         [all_data] = pkl.load(f)
+    # else:
+    #     all_data = {}
     if all_data[room_name]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
         return
@@ -187,11 +188,11 @@ def set_desc(bot, update):
         return
     room_name = current_room[user_code]
 
-    if os.path.isfile('all_data.pkl'):
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
-    else:
-        all_data = {}
+    # if os.path.isfile('all_data.pkl'):
+    #     with open('all_data.pkl', 'rb') as f:
+    #         [all_data] = pkl.load(f)
+    # else:
+    #     all_data = {}
     if all_data[room_name]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
         return
@@ -204,8 +205,8 @@ def join_room(bot, update, args):
         return
     room_name = args[0]
     user_code = update.message.chat_id
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #     [all_data] = pkl.load(f)
     if not room_name in all_data.keys():
         update.message.reply_text("there is no room with this name!")
     else:
@@ -247,11 +248,11 @@ def new_bet(bot, update):
         return
     room_name = current_room[user_code]
 
-    if os.path.isfile('all_data.pkl'):
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
-    else:
-        all_data = {}
+    # if os.path.isfile('all_data.pkl'):
+    #     with open('all_data.pkl', 'rb') as f:
+    #         [all_data] = pkl.load(f)
+    # else:
+    #     all_data = {}
     if all_data[room_name]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
     else:
@@ -269,11 +270,11 @@ def remove_bet(bot, update, args):
         return
     room_name = current_room[user_code]
 
-    if os.path.isfile('all_data.pkl'):
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
-    else:
-        all_data = {}
+    # if os.path.isfile('all_data.pkl'):
+    #     with open('all_data.pkl', 'rb') as f:
+    #         [all_data] = pkl.load(f)
+    # else:
+    #     all_data = {}
     if all_data[room_name]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
     else:
@@ -294,8 +295,8 @@ def show_bets(bot, update):
     if current_room[user_code] is None:
         update.message.reply_text("You are not in any rooms. please join to a room first")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #     [all_data] = pkl.load(f)
     res_str = ''
     for i, this_bet in enumerate(all_data[current_room[user_code]]['bets']):
         this_open = '    [[...Open...]]' if this_bet.open else '    [[...Closed...]]'
@@ -310,8 +311,8 @@ def close_bet(bot, update, args):
     if current_room[user_code] == None:
         update.message.reply_text("You are not in any room. you should first create a room then join it then you can add new bets and submit results of these bets")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #     [all_data] = pkl.load(f)
     if all_data[current_room[user_code]]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
         return
@@ -332,8 +333,8 @@ def open_bet(bot, update, args):
     if current_room[user_code] == None:
         update.message.reply_text("You are not in any room. you should first create a room then join it then you can add new bets and submit results of these bets")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #     [all_data] = pkl.load(f)
     if all_data[current_room[user_code]]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
         return
@@ -351,8 +352,8 @@ def submit_result(bot, update, args):
     if current_room[user_code] == None:
         update.message.reply_text("You are not in any room. you should first create a room then join it then you can add new bets and submit results of these bets")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     if all_data[current_room[user_code]]['admin'] != user_code:
         update.message.reply_text("you are not admin of this room!")
         return
@@ -375,8 +376,8 @@ def refill_bets(bot, update):
         update.message.reply_text("You are not in any rooms. please join to a room first")
         return
     update.message.reply_text("you should predict all the bets. \n for match bets you should send 2 numbers and for choices you should write your chioces with spaces between. \n type X to cancle the operation \n Lets START...")
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     bet_counter[user_code] = 0
     this_title = all_data[current_room[user_code]]['bets'][0].name
     update.message.reply_text('1. ' + this_title)
@@ -391,8 +392,8 @@ def modify_bet(bot, update, args):
         return
     bet_counter[user_code] = int(args[0]) - 1
     single_change[user_code] = True
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     this_title = all_data[current_room[user_code]]['bets'][bet_counter[user_code]].name
     update.message.reply_text(str(bet_counter[user_code] + 1) + '. ' + this_title)
 
@@ -409,8 +410,8 @@ def show_predictions(bot, update, args):
         update.message.reply_text("Please insert a bet number. you can see them with /show_bets")
         return
     betno = int(args[0]) - 1
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     update.message.reply_text(str(betno+1) + '. ' + all_data[current_room[user_code]]['bets'][betno].name)
     res_str = ''
     for user in all_data[current_room[user_code]]['bets'][betno].predicts:
@@ -422,8 +423,8 @@ def score_board(bot, update):
     if current_room[user_code] is None:
         update.message.reply_text("You are not in any rooms. please join to a room first")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     sb = {}
     for user in all_data[current_room[user_code]]['members'].values():
         user_reward = 0
@@ -444,8 +445,8 @@ def show_members(bot, update):
     if current_room[user_code] is None:
         update.message.reply_text("You are not in any rooms. please join to a room first")
         return
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
     res_str = ''
     for member in all_data[current_room[user_code]]['members'].values():
         res_str += member + '\n'
@@ -454,8 +455,8 @@ def show_members(bot, update):
 def echo(bot, update):
     user_code = update.message.chat_id
     if rusure[user_code]:
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
+        # with open('all_data.pkl', 'rb') as f:
+        #    [all_data] = pkl.load(f)
         response = update.message.text
         if response.lower() == "yes":
             del all_data[current_room[user_code]]
@@ -474,8 +475,8 @@ def echo(bot, update):
             update.message.reply_text("please say yes or no :|")
 
     if desc_creation[user_code]:
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
+        # with open('all_data.pkl', 'rb') as f:
+        #    [all_data] = pkl.load(f)
         desc_text = update.message.text
         all_data[current_room[user_code]]['desc'] = desc_text
         update.message.reply_text("Description Added Successfully.")
@@ -485,8 +486,8 @@ def echo(bot, update):
         return
 
     if bet_counter[user_code] > -1:
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
+        # with open('all_data.pkl', 'rb') as f:
+        #    [all_data] = pkl.load(f)
         this_bet_pred = update.message.text
         if this_bet_pred.lower() == 'x':
             bet_counter[user_code] = -1
@@ -575,8 +576,8 @@ def echo(bot, update):
             update.message.reply_text("Your Bet Submitted!!!")
             after_yn2[user_code] = False
             this_bet = Bet(name=bet_info[user_code]['bet_name'], rewards=bet_info[user_code]['reward'], num = bet_info[user_code]['number'])
-        with open('all_data.pkl', 'rb') as f:
-            [all_data] = pkl.load(f)
+        # with open('all_data.pkl', 'rb') as f:
+        #    [all_data] = pkl.load(f)
         all_data[bet_info[user_code]['room']]['bets'].append(this_bet)
         with open('all_data.pkl', 'wb') as f:
             pkl.dump([all_data], f)
@@ -634,26 +635,29 @@ def setup(webhook_url=None):
         updater.idle()
 
 def hack_start(bot, update, args):
-    user_code = args[0]
-    bet_creation[user_code] = False
-    y_or_n[user_code] = False
-    after_yn1[user_code] = False
-    after_yn2[user_code] = False
-    bet_counter[user_code] = -1
-    current_room[user_code] = None
-    single_change[user_code] = False
-    desc_creation[user_code] = False
-    rusure[user_code] = False
+    for room in all_data:
+        update.message.reply_text(str(all_data[room]))
 
-    bet_info[user_code] = {}
 
 def hack(bot, update, args):
     room_name = args[0]
     user_id = args[1]
     user_name = args[2]
+    
+    bet_creation[user_code] = False
+    y_or_n[user_code] = False
+    after_yn1[user_code] = False
+    after_yn2[user_code] = False
+    bet_counter[user_code] = -1
+    current_room[user_code] = room_name
+    single_change[user_code] = False
+    desc_creation[user_code] = False
+    rusure[user_code] = False
 
-    with open('all_data.pkl', 'rb') as f:
-        [all_data] = pkl.load(f)
+    bet_info[user_code] = {}
+    
+    # with open('all_data.pkl', 'rb') as f:
+    #    [all_data] = pkl.load(f)
 
     if not room_name in all_data.keys():
         update.message.reply_text("There is no room with this name")
