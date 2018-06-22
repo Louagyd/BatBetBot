@@ -412,7 +412,7 @@ def score_board(bot, update):
                 if user in this_bet.user_rewards:
                     user_reward += this_bet.user_rewards[user]
         if user in all_data[current_room[user_code]]['bonus'].keys():
-            user_reward += all_data['bonus'][user]
+            user_reward += all_data[current_room[user_code]]['bonus'][user]
         sb[user] = user_reward
 
     sb = sorted(sb.items(), key=lambda x: x[1], reverse=True)
