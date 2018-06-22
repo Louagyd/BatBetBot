@@ -411,7 +411,7 @@ def score_board(bot, update):
             if not this_bet.open:
                 if user in this_bet.user_rewards:
                     user_reward += this_bet.user_rewards[user]
-        if user in all_data['bonus'].keys():
+        if user in all_data[current_room[user_code]]['bonus'].keys():
             user_reward += all_data['bonus'][user]
         sb[user] = user_reward
 
