@@ -133,7 +133,7 @@ def new_room(bot, update, args):
         update.message.reply_text("name of room already exists!")
         return
 
-    all_data[room_name] = {'admin':admin_code, 'desc':None, 'members':{admin_code:admin_id}, 'bets':[]}
+    all_data[room_name] = {'admin':admin_code, 'desc':None, 'members':{admin_code:admin_id}, 'bets':[], 'bonus':{}}
     with open('all_data.pkl', 'wb') as f:
         pkl.dump([all_data], f)
     current_room[admin_code] = room_name
@@ -411,9 +411,8 @@ def score_board(bot, update):
             if not this_bet.open:
                 if user in this_bet.user_rewards:
                     user_reward += this_bet.user_rewards[user]
-        if 'bonus' in all_data.keys():
-            if user in all_data['bonus'].keys():
-                user_reward += all_data['bonus'][user]
+        if user in all_data['bonus'].keys():
+            user_reward += all_data['bonus'][user]
         sb[user] = user_reward
 
     sb = sorted(sb.items(), key=lambda x: x[1], reverse=True)
