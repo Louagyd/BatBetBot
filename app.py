@@ -632,7 +632,7 @@ def hack_score(bot, update, args):
     
 def hack(bot, update, args):
     room_name = args[0]
-    user_id = args[1]
+    user_id = int(args[1])
     user_name = args[2]
     
     bet_creation[user_id] = False
