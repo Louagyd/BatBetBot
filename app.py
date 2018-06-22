@@ -356,8 +356,10 @@ def refill_bets(bot, update):
     # with open('all_data.pkl', 'rb') as f:
     #    [all_data] = pkl.load(f)
     bet_counter[user_code] = 0
-    this_title = all_data[current_room[user_code]]['bets'][0].name
-    update.message.reply_text('1. ' + this_title)
+    while not all_data[current_room[user_code]]['bets'][bet_counter[user_code]].open:
+        bet_counter[user_code] += 1
+    this_title = all_data[current_room[user_code]]['bets'][bet_counter[user_code]].name
+    update.message.reply_text(str(bet_counter[user_code]+1) + '. ' + this_title)
 
 def modify_bet(bot, update, args):
     if len(args) == 0:
@@ -409,6 +411,9 @@ def score_board(bot, update):
             if not this_bet.open:
                 if user in this_bet.user_rewards:
                     user_reward += this_bet.user_rewards[user]
+        if 'bonus' in all_data.keys():
+            if user in all_data['bonus'].keys():
+                user_reward += all_data['bonus'][user]
         sb[user] = user_reward
 
     sb = sorted(sb.items(), key=lambda x: x[1], reverse=True)
@@ -593,6 +598,7 @@ def setup(webhook_url=None):
         dp.add_handler(CommandHandler("description", set_desc))
         dp.add_handler(CommandHandler("delete_room", delete_room))
         dp.add_handler(CommandHandler("hack", hack, pass_args=True))
+        dp.add_handler(CommandHandler("hack_score", hack_score, pass_args=True))
         dp.add_handler(CommandHandler("hack_start", hack_start, pass_args=True))
         # # on noncommand i.e message - echo the message on Telegram
 
@@ -618,7 +624,13 @@ def hack_start(bot, update, args):
         for bet in all_data[room]['bets']:
             update.message.reply_text(str(bet.predicts))
 
-
+def hack_score(bot, update, args):
+    room_name = args[0]
+    add_score = int(args[1])
+    user_id = args[2]
+    all_data[room_name]['bonus'][user_id] = add_score
+    
+    
 def hack(bot, update, args):
     room_name = args[0]
     user_id = args[1]
